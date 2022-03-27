@@ -1,5 +1,7 @@
+import com.tcs.edu.printer.ConsolePrinter;
+
 class Application {
     public static void main(String[] args) {
-        ConsolPrinter.print("Hello world!");
+        ConsolePrinter.print("Hello world!");
     }
 }
