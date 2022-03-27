@@ -15,9 +15,8 @@ public class TimestampMessageDecorator {
      * @see com.tcs.edu.printer.ConsolePrinter#print(String)
      */
     public static String decorate(String message){
-        String decoratedMessage;
         messageCount++;
-        decoratedMessage = messageCount + " " + new Date() + " " + message;
+        var decoratedMessage = messageCount + " " + new Date() + " " + message;
         return decoratedMessage;
     }
 }
