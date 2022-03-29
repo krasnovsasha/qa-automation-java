@@ -1,8 +1,10 @@
 package com.tcs.edu.decorator;
 
+import java.time.Instant;
 import java.util.Date;
 
 /**
+ * @author a.a.krasnov
  * The {@code TimestampMessageDecorator} class contains method {@code decorate} for change
  * base message output.
  */
@@ -12,11 +14,12 @@ public class TimestampMessageDecorator {
      * @param message incoming base message
      * @return decoratedMessage with changes
      * <p>
+     * side-effect method changes console output
+     * <p>
      * @see com.tcs.edu.printer.ConsolePrinter#print(String)
      */
     public static String decorate(String message){
         messageCount++;
-        var decoratedMessage = messageCount + " " + new Date() + " " + message;
-        return decoratedMessage;
+        return messageCount + " " + Instant.now() + " " + message;
     }
 }
