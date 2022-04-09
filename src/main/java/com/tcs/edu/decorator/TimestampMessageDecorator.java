@@ -9,16 +9,20 @@ import java.time.Instant;
  */
 public class TimestampMessageDecorator {
     private static int messageCount;
+    private static final int PAGE_SIZE = 2;
+
     /**
      * @param message incoming base message
-     * @return decoratedMessage with changes
+     * @return new message with changes
      * <p>
      * side-effect method changes console output
      * <p>
      * @see com.tcs.edu.printer.ConsolePrinter#print(String)
      */
     public static String decorate(String message) {
-        messageCount++;
+        if (++messageCount % PAGE_SIZE == 0) {
+            return String.format("%s %s %s%n---", messageCount, Instant.now(), message);
+        }
         return String.format("%s %s %s", messageCount, Instant.now(), message);
     }
 }
