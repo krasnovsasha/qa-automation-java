@@ -1,7 +1,6 @@
 package com.tcs.edu.decorator;
 
 import java.time.Instant;
-import java.util.Date;
 
 /**
  * @author a.a.krasnov
@@ -10,16 +9,21 @@ import java.util.Date;
  */
 public class TimestampMessageDecorator {
     private static int messageCount;
+    private static final int PAGE_SIZE = 2;
+
     /**
      * @param message incoming base message
-     * @return decoratedMessage with changes
+     * @return new message with changes
      * <p>
      * side-effect method changes console output
      * <p>
      * @see com.tcs.edu.printer.ConsolePrinter#print(String)
      */
-    public static String decorate(String message){
-        messageCount++;
-        return messageCount + " " + Instant.now() + " " + message;
+    public static String decorate(String message) {
+        String decoratedMessage = String.format("%d %s %s", ++messageCount, Instant.now(), message);
+        if (messageCount % PAGE_SIZE == 0) {
+            decoratedMessage = String.format("%s%n---", decoratedMessage);
+        }
+        return decoratedMessage;
     }
 }
