@@ -20,9 +20,10 @@ public class TimestampMessageDecorator {
      * @see com.tcs.edu.printer.ConsolePrinter#print(String)
      */
     public static String decorate(String message) {
-        if (++messageCount % PAGE_SIZE == 0) {
-            return String.format("%s %s %s%n---", messageCount, Instant.now(), message);
+        String decoratedMessage = String.format("%d %s %s", ++messageCount, Instant.now(), message);
+        if (messageCount % PAGE_SIZE == 0) {
+            return String.format("%s%n---",decoratedMessage);
         }
-        return String.format("%s %s %s", messageCount, Instant.now(), message);
+        return decoratedMessage;
     }
 }
