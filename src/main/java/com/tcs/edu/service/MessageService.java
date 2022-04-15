@@ -14,17 +14,20 @@ import static com.tcs.edu.decorator.CountDecorator.decorateCount;
 public class MessageService {
     /**
      * API
-     * @param level incoming severity
-     * @param message incoming message
+     *
+     * @param level   incoming severity
+     * @param messages incoming messages
      */
-    public void processMessage(Severity level, String message) {
+    public static void processMessage(Severity level, String... messages) {
 
 //      It is possible to change decorators positions or turn any of them off for more agile output
-        ConsolePrinter.print(
-                        decorateCount() +
-                        decorateTimeStamp(message) +
-                        decorateSeverityLevel(level) +
-                        separateByPage()
-        );
+        for (String s : messages) {
+            ConsolePrinter.print(
+                    decorateCount() +
+                    decorateTimeStamp(s) +
+                    decorateSeverityLevel(level) +
+                    separateByPage()
+            );
+        }
     }
 }
