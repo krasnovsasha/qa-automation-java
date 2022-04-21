@@ -15,15 +15,21 @@ public class SeverityDecorator {
      * <p>
      * side-effect method changes console output cause it adds string severity designation
      */
-    public static String decorateSeverityLevel(Severity level){
+    public static String decorateSeverityLevel(Severity level) {
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_RED = "\u001B[31m";
         final String ANSI_YELLOW = "\u001B[33m";
         String severityLevel = null;
         switch (level) {
-            case MINOR:severityLevel = "()"; break;
-            case REGULAR:severityLevel = "(" + ANSI_YELLOW + "!" + ANSI_RESET + ")"; break;
-            case MAJOR:severityLevel = "(" +  ANSI_RED + "!!!" + ANSI_RESET + ")"; break;
+            case MINOR:
+                severityLevel = "()";
+                break;
+            case REGULAR:
+                severityLevel = "(" + ANSI_YELLOW + "!" + ANSI_RESET + ")";
+                break;
+            case MAJOR:
+                severityLevel = "(" + ANSI_RED + "!!!" + ANSI_RESET + ")";
+                break;
         }
         return severityLevel;
     }
