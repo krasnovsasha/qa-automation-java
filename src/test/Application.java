@@ -1,5 +1,6 @@
 import static com.tcs.edu.enums.Severity.*;
 import static com.tcs.edu.enums.MessageOrder.*;
+import static com.tcs.edu.enums.Doubling.*;
 import static com.tcs.edu.service.MessageService.processMessage;
 
 class Application {
@@ -14,5 +15,9 @@ class Application {
         processMessage(MAJOR,DESC, "message1", "message2", "message3");
         //test for ASC
         processMessage(MAJOR,ASC, "message1", "message2", "message3");
+        //test for DISTINCT messages
+        processMessage(MAJOR, DESC, DISTINCT,"messageTheSame","messageTheSame","messageNotTheSame");
+        //test for DOUBLING messages
+        processMessage(MAJOR, ASC, DOUBLES,"messageTheSame","messageTheSame","messageNotTheSame");
     }
 }
