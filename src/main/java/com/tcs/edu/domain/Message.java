@@ -22,7 +22,7 @@ public class Message {
     }
 
     public Message(String body) {
-        this.body = body;
+        this(Severity.MINOR,body);
     }
 
     public Severity getLevel() {
