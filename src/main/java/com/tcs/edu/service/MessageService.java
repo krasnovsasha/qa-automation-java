@@ -1,14 +1,14 @@
 package com.tcs.edu.service;
 
+import com.tcs.edu.domain.Message;
 import com.tcs.edu.enums.Doubling;
-import com.tcs.edu.enums.MessageOrder;
-import com.tcs.edu.enums.Severity;
+import com.tcs.edu.enums.OutputOrder;
 import com.tcs.edu.printer.ConsolePrinter;
 
 import java.util.ArrayList;
 
 import static com.tcs.edu.decorator.SeverityDecorator.decorateSeverityLevel;
-import static com.tcs.edu.decorator.TimestampMessageDecorator.decorateTimeStamp;
+import static com.tcs.edu.decorator.TimestampDecorator.decorateTimeStamp;
 import static com.tcs.edu.decorator.PageDecorator.*;
 import static com.tcs.edu.decorator.CountDecorator.decorateCount;
 
@@ -19,113 +19,116 @@ public class MessageService {
     /**
      * API
      * <p>
-     * @param level    incoming severity
+     *
      * @param messages incoming messages
-     * <p>
-     * In method ConsolePrinter.print()
-     * It is possible to change decorators positions or turn any of them off for more agile output
+     *                 <p>
+     *                 In method ConsolePrinter.print()
      */
-    public static void processMessage(Severity level, String message, String... messages) {
-        ArrayList<String> messagesIncome = incomeMessageGenerate(message, messages);
-        for (String s : messagesIncome) {
+    public static void log(Message message, Message... messages) {
+        ArrayList<Message> messagesIncome = incomeMessageGenerate(message, messages);
+        for (Message incomeMessage : messagesIncome) {
             ConsolePrinter.print(
                     decorateCount() +
-                    decorateTimeStamp(s) +
-                    decorateSeverityLevel(level) +
-                    separateByPage()
+                            decorateTimeStamp(incomeMessage.getBody()) +
+                            decorateSeverityLevel(incomeMessage.getLevel()) +
+                            separateByPage()
             );
         }
     }
+
     /**
      * API
      * <p>
-     * @param level    incoming severity
+     *
      * @param order    incoming order ASC or DESC
      * @param messages incoming messages
      */
-    public static void processMessage(Severity level, MessageOrder order, String message, String... messages) {
-        ArrayList<String> messagesIncome = incomeMessageGenerate(message, messages);
-        printDescOrAscMsg(level, order, messagesIncome);
+    public static void log(OutputOrder order, Message message, Message... messages) {
+        ArrayList<Message> messagesIncome = incomeMessageGenerate(message, messages);
+        printDescOrAscMsg(order, messagesIncome);
     }
+
     /**
      * API
      * <p>
-     * @param level    incoming severity
+     *
      * @param order    incoming order ASC or DESC
      * @param doubling incoming setting for print all or unique messages
      * @param messages incoming messages
      */
-    public static void processMessage(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
-        ArrayList<String> messagesIncome = incomeMessageGenerate(doubling, message, messages);
-        printDescOrAscMsg(level, order, messagesIncome);
+    public static void log(OutputOrder order, Doubling doubling, Message message, Message... messages) {
+        ArrayList<Message> messagesIncome = incomeMessageGenerate(doubling, message, messages);
+        printDescOrAscMsg(order, messagesIncome);
     }
+
     /**
-     * @param level    incoming severity
-     * @param order    incoming order ASC or DESC
+     * @param order          incoming order ASC or DESC
      * @param messagesIncome incoming messages
-     * <p>
-     * method printDescOrAscMsg help to print info about order number of message in direct or reverse sort
+     *                       <p>
+     *                       method printDescOrAscMsg help to print info about order number of message in direct or reverse sort
      */
-    private static void printDescOrAscMsg(Severity level, MessageOrder order, ArrayList<String> messagesIncome) {
-        if (order.equals(MessageOrder.DESC)) {
+    private static void printDescOrAscMsg(OutputOrder order, ArrayList<Message> messagesIncome) {
+        if (order.equals(OutputOrder.DESC)) {
             for (int i = messagesIncome.size() - 1; i >= 0; i--) {
                 ConsolePrinter.print(
                         decorateCount() +
-                        decorateTimeStamp(messagesIncome.get(i) + " " + (i + 1)) +
-                        decorateSeverityLevel(level) +
-                        separateByPage()
+                                decorateTimeStamp(messagesIncome.get(i).getBody() + " " + (i + 1)) +
+                                decorateSeverityLevel(messagesIncome.get(i).getLevel()) +
+                                separateByPage()
                 );
             }
-        } else if (order.equals(MessageOrder.ASC)) {
+        } else if (order.equals(OutputOrder.ASC)) {
             for (int i = 0; i <= messagesIncome.size() - 1; i++) {
                 ConsolePrinter.print(
                         decorateCount() +
-                        decorateTimeStamp(messagesIncome.get(i) + " " + (i + 1)) +
-                        decorateSeverityLevel(level) +
-                        separateByPage()
+                                decorateTimeStamp(messagesIncome.get(i).getBody() + " " + (i + 1)) +
+                                decorateSeverityLevel(messagesIncome.get(i).getLevel()) +
+                                separateByPage()
                 );
             }
         }
     }
+
     /**
-     * @param message    incoming message
-     * @param messages    incoming array of messages
+     * @param message  incoming message
+     * @param messages incoming array of messages
      * @return messagesIncome
      * <p>
      * method incomeMessageGenerate help to create list of incoming messages without nulls
      */
-    private static ArrayList<String> incomeMessageGenerate(String message, String... messages) {
-        ArrayList<String> messagesIncome = new ArrayList<>();
+    private static ArrayList<Message> incomeMessageGenerate(Message message, Message... messages) {
+        ArrayList<Message> messagesIncome = new ArrayList<>();
         if (message != null) {
             messagesIncome.add(message);
         }
         if (messages != null) {
-            for (String s : messages) {
-                if (s != null) {
-                    messagesIncome.add(s);
+            for (Message messageIncome : messages) {
+                if (messageIncome != null) {
+                    messagesIncome.add(messageIncome);
                 }
             }
         }
         return messagesIncome;
     }
+
     /**
-     * @param doubling   incoming enum which help to add all or only distinct messages
-     * @param message    incoming message
-     * @param messages   incoming array of messages
+     * @param doubling incoming enum which help to add all or only distinct messages
+     * @param message  incoming message
+     * @param messages incoming array of messages
      * @return messagesIncome
      * <p>
      * method incomeMessageGenerate help to create list of incoming messages without nulls and to add all messages or only distinct ones
      */
-    private static ArrayList<String> incomeMessageGenerate(Doubling doubling, String message, String... messages) {
-        ArrayList<String> messagesIncome = new ArrayList<>();
+    private static ArrayList<Message> incomeMessageGenerate(Doubling doubling, Message message, Message... messages) {
+        ArrayList<Message> messagesIncome = new ArrayList<>();
         if (doubling.equals(Doubling.DISTINCT)) {
             if (message != null) {
                 messagesIncome.add(message);
             }
             if (messages != null) {
-                for (String s : messages) {
-                    if (s != null && !messagesIncome.contains(s)) {
-                        messagesIncome.add(s);
+                for (Message messageIncome : messages) {
+                    if (messageIncome != null && !messagesIncome.contains(messageIncome)) {
+                        messagesIncome.add(messageIncome);
                     }
                 }
             }
@@ -135,9 +138,9 @@ public class MessageService {
                 messagesIncome.add(message);
             }
             if (messages != null) {
-                for (String s : messages) {
-                    if (s != null) {
-                        messagesIncome.add(s);
+                for (Message messageIncome : messages) {
+                    if (messageIncome != null) {
+                        messagesIncome.add(messageIncome);
                     }
                 }
             }
