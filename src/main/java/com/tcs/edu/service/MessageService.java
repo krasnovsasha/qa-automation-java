@@ -25,7 +25,7 @@ public class MessageService {
      * In method ConsolePrinter.print()
      * It is possible to change decorators positions or turn any of them off for more agile output
      */
-    public static void processMessage(Severity level, String message, String... messages) {
+    public static void log(Severity level, String message, String... messages) {
         ArrayList<String> messagesIncome = incomeMessageGenerate(message, messages);
         for (String s : messagesIncome) {
             ConsolePrinter.print(
@@ -43,7 +43,7 @@ public class MessageService {
      * @param order    incoming order ASC or DESC
      * @param messages incoming messages
      */
-    public static void processMessage(Severity level, MessageOrder order, String message, String... messages) {
+    public static void log(Severity level, MessageOrder order, String message, String... messages) {
         ArrayList<String> messagesIncome = incomeMessageGenerate(message, messages);
         printDescOrAscMsg(level, order, messagesIncome);
     }
@@ -55,7 +55,7 @@ public class MessageService {
      * @param doubling incoming setting for print all or unique messages
      * @param messages incoming messages
      */
-    public static void processMessage(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
+    public static void log(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
         ArrayList<String> messagesIncome = incomeMessageGenerate(doubling, message, messages);
         printDescOrAscMsg(level, order, messagesIncome);
     }
