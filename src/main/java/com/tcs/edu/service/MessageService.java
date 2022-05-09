@@ -1,7 +1,7 @@
 package com.tcs.edu.service;
 
 import com.tcs.edu.enums.Doubling;
-import com.tcs.edu.enums.MessageOrder;
+import com.tcs.edu.enums.OutputOrder;
 import com.tcs.edu.enums.Severity;
 import com.tcs.edu.printer.ConsolePrinter;
 
@@ -43,7 +43,7 @@ public class MessageService {
      * @param order    incoming order ASC or DESC
      * @param messages incoming messages
      */
-    public static void log(Severity level, MessageOrder order, String message, String... messages) {
+    public static void log(Severity level, OutputOrder order, String message, String... messages) {
         ArrayList<String> messagesIncome = incomeMessageGenerate(message, messages);
         printDescOrAscMsg(level, order, messagesIncome);
     }
@@ -55,7 +55,7 @@ public class MessageService {
      * @param doubling incoming setting for print all or unique messages
      * @param messages incoming messages
      */
-    public static void log(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
+    public static void log(Severity level, OutputOrder order, Doubling doubling, String message, String... messages) {
         ArrayList<String> messagesIncome = incomeMessageGenerate(doubling, message, messages);
         printDescOrAscMsg(level, order, messagesIncome);
     }
@@ -66,8 +66,8 @@ public class MessageService {
      * <p>
      * method printDescOrAscMsg help to print info about order number of message in direct or reverse sort
      */
-    private static void printDescOrAscMsg(Severity level, MessageOrder order, ArrayList<String> messagesIncome) {
-        if (order.equals(MessageOrder.DESC)) {
+    private static void printDescOrAscMsg(Severity level, OutputOrder order, ArrayList<String> messagesIncome) {
+        if (order.equals(OutputOrder.DESC)) {
             for (int i = messagesIncome.size() - 1; i >= 0; i--) {
                 ConsolePrinter.print(
                         decorateCount() +
@@ -76,7 +76,7 @@ public class MessageService {
                         separateByPage()
                 );
             }
-        } else if (order.equals(MessageOrder.ASC)) {
+        } else if (order.equals(OutputOrder.ASC)) {
             for (int i = 0; i <= messagesIncome.size() - 1; i++) {
                 ConsolePrinter.print(
                         decorateCount() +

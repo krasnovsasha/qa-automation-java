@@ -1,7 +1,7 @@
 package com.tcs.edu;
 
 import static com.tcs.edu.enums.Severity.*;
-import static com.tcs.edu.enums.MessageOrder.*;
+import static com.tcs.edu.enums.OutputOrder.*;
 import static com.tcs.edu.enums.Doubling.*;
 import static com.tcs.edu.service.MessageService.log;
 
