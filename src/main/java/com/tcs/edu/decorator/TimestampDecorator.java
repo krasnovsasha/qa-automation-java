@@ -5,10 +5,10 @@ import java.time.Instant;
 /**
  * @author a.a.krasnov
  * <p>
- * The {@code TimestampMessageDecorator} class contains method {@code decorateTimeStamp} for change
+ * The {@code TimestampDecorator} class contains method {@code decorateTimeStamp} for change
  * base message output.
  */
-public class TimestampMessageDecorator {
+public class TimestampDecorator {
     /**
      * @param message incoming base message
      * @return new message with changes

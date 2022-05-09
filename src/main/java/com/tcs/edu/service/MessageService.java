@@ -8,7 +8,7 @@ import com.tcs.edu.printer.ConsolePrinter;
 import java.util.ArrayList;
 
 import static com.tcs.edu.decorator.SeverityDecorator.decorateSeverityLevel;
-import static com.tcs.edu.decorator.TimestampMessageDecorator.decorateTimeStamp;
+import static com.tcs.edu.decorator.TimestampDecorator.decorateTimeStamp;
 import static com.tcs.edu.decorator.PageDecorator.*;
 import static com.tcs.edu.decorator.CountDecorator.decorateCount;
 
