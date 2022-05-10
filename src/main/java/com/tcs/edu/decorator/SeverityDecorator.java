@@ -1,26 +1,27 @@
 package com.tcs.edu.decorator;
 
-import com.tcs.edu.enums.Severity;
+import com.tcs.edu.domain.Message;
 
 /**
  * @author a.a.krasnov
  * <p>
- * The {@code SeverityDecorator} class contains method {@code decorateSeverityLevel} for change
+ * The {@code SeverityDecorator} class implements method {@code decorate} for change
  * base message output.
  */
-public class SeverityDecorator {
+public class SeverityDecorator implements Decorator {
     /**
-     * @param level incoming severity
+     * @param message incoming message
      * @return severityLevel
      * <p>
      * side-effect method changes console output cause it adds string severity designation
      */
-    public static String decorateSeverityLevel(Severity level) {
+    @Override
+    public String decorate(Message message) {
         final String ANSI_RESET = "\u001B[0m";
         final String ANSI_RED = "\u001B[31m";
         final String ANSI_YELLOW = "\u001B[33m";
         String severityLevel = null;
-        switch (level) {
+        switch (message.getLevel()) {
             case MINOR:
                 severityLevel = "()";
                 break;

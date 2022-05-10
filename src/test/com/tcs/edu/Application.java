@@ -1,23 +1,32 @@
 package com.tcs.edu;
 
+import com.tcs.edu.decorator.TimestampDecorator;
 import com.tcs.edu.domain.Message;
+import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.service.MessageService;
+import com.tcs.edu.service.OrderedDistinctedMessageService;
 
+import static com.tcs.edu.enums.OutputOrder.ASC;
+import static com.tcs.edu.enums.OutputOrder.DESC;
 import static com.tcs.edu.enums.Severity.*;
-import static com.tcs.edu.enums.OutputOrder.*;
-import static com.tcs.edu.enums.Doubling.*;
-import static com.tcs.edu.service.MessageService.log;
 
 class Application {
     public static void main(String[] args) {
-        //test for one message
-        log(new Message(MINOR, "this message has minor priority"));
-        //test for ascending messages
-        log(ASC, new Message(REGULAR, "message first"), new Message(REGULAR, "message second"));
-        //test for descending messages
-        log(DESC, new Message(REGULAR, "message first"), new Message(REGULAR, "message second"));
-        //test for distinct-only messages
-        log(ASC, DISTINCT, new Message(MAJOR, "message1"), new Message(MAJOR, "message1"), new Message(REGULAR, "message3"));
-        //test for messages which may have doubles
-        log(DESC, DOUBLES, new Message(MAJOR, "message1"), new Message(MAJOR, "message1"), new Message(REGULAR, "message3"));
+        //service processes only unique messages
+        MessageService service = new OrderedDistinctedMessageService(
+                new TimestampDecorator(),
+                new ConsolePrinter()
+        );
+        //test data
+        Message message1 = new Message(MAJOR, "test message 1");
+        Message message2 = new Message(MAJOR, "test message 1");
+        Message message3 = new Message(MINOR, "test message 2");
+        Message message4 = new Message(MINOR, "test message 3");
+        Message message5 = new Message(REGULAR, "test message 4");
+        Message message6 = new Message(MAJOR, "test message 5");
+//        //test ASC
+        service.log(ASC, message1, message2, message3, message4, message5, message6);
+        //test DESC
+        service.log(DESC, message1, message2, message3, message4, message5, message6);
     }
 }
