@@ -1,17 +1,22 @@
 package com.tcs.edu.decorator;
 
+import com.tcs.edu.domain.Message;
+
 /**
  * @author a.a.krasnov
  * <p>
- * The {@code CountDecorator} class contains method {@code decorateMessageCount} for change
+ * The {@code CountDecorator} class implements method {@code decorate} for change
  * base message output. This method add count for every message row
  */
-public class CountDecorator {
-    private static int counter = 1;
+public class CountDecorator implements Decorator {
+    private int counter = 1;
+
     /**
+     * @param message incoming message
      * @return counter which was increased
      */
-    public static int decorateCount(){
-        return counter++;
+    @Override
+    public String decorate(Message message) {
+        return String.valueOf(counter++);
     }
 }

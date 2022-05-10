@@ -13,8 +13,8 @@ public class Message {
     /**
      * Instance var = field
      */
-    private Severity level;
-    private String body;
+    private final Severity level;
+    private final String body;
 
     public Message(Severity level, String body) {
         this.level = level;
@@ -22,7 +22,7 @@ public class Message {
     }
 
     public Message(String body) {
-        this(Severity.MINOR,body);
+        this(Severity.MINOR, body);
     }
 
     public Severity getLevel() {
