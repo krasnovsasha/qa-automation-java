@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * @author a.a.krasnov
  */
-public class OrderedDistinctedMessageService implements MessageService {
+public class OrderedDistinctedMessageService extends ValidatedService implements MessageService {
     private final Printer printer;
     private final Decorator decorator;
     private final Decorator severityDecorator = new SeverityDecorator();
@@ -56,7 +56,7 @@ public class OrderedDistinctedMessageService implements MessageService {
         }
     }
 
-    private String getDecoratedMessage(ArrayList<Message> messagesIncome,int i) {
+    private String getDecoratedMessage(ArrayList<Message> messagesIncome, int i) {
         return countDecorator.decorate(messagesIncome.get(i)) +
                 decorator.decorate(messagesIncome.get(i)) +
                 severityDecorator.decorate(messagesIncome.get(i)) +
@@ -70,13 +70,17 @@ public class OrderedDistinctedMessageService implements MessageService {
      * <p>
      * method getDistinct help to create list of messages in case of need distinct only
      */
-    private static Set<Message> getDistinct(Message message, Message[] messages) {
+    private Set<Message> getDistinct(Message message, Message[] messages) {
         Set<Message> messagesIncome = new LinkedHashSet<>();
-        if (message != null) {
+        if (!super.isArgValid(message)) {
             messagesIncome.add(message);
         }
-        if (messages != null) {
-            messagesIncome.addAll(List.of(messages));
+        if (super.isArgsValid(messages)) {
+            for (Message msg : messages) {
+                if (!super.isArgValid(msg)) {
+                    messagesIncome.add(msg);
+                }
+            }
         }
         return messagesIncome;
     }

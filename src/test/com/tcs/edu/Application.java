@@ -22,10 +22,10 @@ class Application {
         Message message2 = new Message(MAJOR, "test message 1");
         Message message3 = new Message(MINOR, "test message 2");
         Message message4 = new Message(MINOR, "test message 3");
-        Message message5 = new Message(REGULAR, "test message 4");
-        Message message6 = new Message(MAJOR, "test message 5");
+        Message message5 = new Message(REGULAR, null);
+        Message message6 = new Message(MAJOR, "");
 //        //test ASC
-        service.log(ASC, message1, message2, message3, message4, message5, message6);
+        service.log(ASC, message1, null);
         //test DESC
         service.log(DESC, message1, message2, message3, message4, message5, message6);
     }
