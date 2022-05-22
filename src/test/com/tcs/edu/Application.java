@@ -22,11 +22,33 @@ class Application {
         Message message2 = new Message(MAJOR, "test message 1");
         Message message3 = new Message(MINOR, "test message 2");
         Message message4 = new Message(MINOR, "test message 3");
-        Message message5 = new Message(REGULAR, "test message 4");
-        Message message6 = new Message(MAJOR, "test message 5");
-//        //test ASC
-        service.log(ASC, message1, message2, message3, message4, message5, message6);
-        //test DESC
+        Message message5 = new Message(REGULAR, null);
+        Message message6 = new Message(MAJOR, "");
+
+        System.out.println("Test array of messages is null:");
+        service.log(ASC, message1, null);
+        System.out.println("*************\n");
+
+        System.out.println("Test message is null and body is empty:");
         service.log(DESC, message1, message2, message3, message4, message5, message6);
+        System.out.println("*************\n");
+
+        System.out.println("Test direct console output");
+        System.out.println(new Message(MAJOR, "system out message"));
+        System.out.println("*************\n");
+
+        System.out.println("Test compare messages");
+        System.out.println(message1.equals(message2));
+        System.out.println(message1.equals(message3));
+        System.out.println("*************\n");
+
+        System.out.println("Test equals/hashcode");
+        System.out.println("message1 hashcode: " + message1.hashCode());
+        System.out.println("message2 hashcode: " + message2.hashCode());
+        System.out.println("message1 == message 2: " + message1.equals(message2));
+        System.out.println("message1 hashcode: " + message1.hashCode());
+        System.out.println("message3 hashcode: " + message3.hashCode());
+        System.out.println("message1 == message 2: " + message1.equals(message3));
+        System.out.println("*************\n");
     }
 }

@@ -33,6 +33,11 @@ public class Message {
         return body;
     }
 
+    @Override
+    public String toString() {
+        return level + " " + body;
+    }
+
     /**
      * if messages has the same severity and the same body they are the same
      */
