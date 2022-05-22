@@ -87,18 +87,9 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
                     messagesIncome.add(msg);
                 }
             }
-
         } catch (IllegalArgumentException e) {
             throw new LogException("notValidArgMessage", e);
         }
-
-//        if (super.isArgsValid(messages)) {
-//            for (Message msg : messages) {
-//                if (!super.isArgValid(msg)) {
-//                    messagesIncome.add(msg);
-//                }
-//            }
-//        }
         return messagesIncome;
     }
 }
