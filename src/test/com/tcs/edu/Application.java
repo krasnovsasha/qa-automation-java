@@ -7,48 +7,48 @@ import com.tcs.edu.service.MessageService;
 import com.tcs.edu.service.OrderedDistinctedMessageService;
 
 import static com.tcs.edu.enums.OutputOrder.ASC;
-import static com.tcs.edu.enums.OutputOrder.DESC;
 import static com.tcs.edu.enums.Severity.*;
 
 class Application {
+
+    private static final String TEST_HEADER = "@Test\n@Description = ";
+    private static final String TEST_SEPARATOR = "*************\n";
+
     public static void main(String[] args) {
-        //service processes only unique messages
-        MessageService service = new OrderedDistinctedMessageService(
-                new TimestampDecorator(),
-                new ConsolePrinter()
-        );
         //test data
         Message message1 = new Message(MAJOR, "test message 1");
         Message message2 = new Message(MAJOR, "test message 1");
         Message message3 = new Message(MINOR, "test message 2");
         Message message4 = new Message(MINOR, "test message 3");
         Message message5 = new Message(REGULAR, null);
-        Message message6 = new Message(MAJOR, "");
+        Message message6 = null;
+        Message message7 = new Message(MAJOR, "");
+        Message message8 = new Message(MAJOR, "system out message");
 
-        System.out.println("Test array of messages is null:");
-        service.log(ASC, message1, null);
-        System.out.println("*************\n");
+        makeCompareTest(message1, message2);
+        makeCompareTest(message1, message3);
 
-        System.out.println("Test message is null and body is empty:");
-        service.log(DESC, message1, message2, message3, message4, message5, message6);
-        System.out.println("*************\n");
+        makeTest("message body is null", message5);
+        makeTest("message is null:", message6);
+        makeTest("message body is empty:", message7);
+        makeTest("array of messages is null:", message1, null);
+        makeTest("direct console output", message8);
+    }
 
-        System.out.println("Test direct console output");
-        System.out.println(new Message(MAJOR, "system out message"));
-        System.out.println("*************\n");
+    private static void makeCompareTest(Message messageToCompare1, Message messageToCompare2) {
+        System.out.printf(
+                "%s equals/hashcode%nmessage1 hashcode: %s%nmessage2 hashcode: %s%nmessage1 == message 2%n%s%s",
+                TEST_HEADER, messageToCompare1.hashCode(), messageToCompare2.hashCode(),
+                messageToCompare1.equals(messageToCompare2), TEST_SEPARATOR);
+    }
 
-        System.out.println("Test compare messages");
-        System.out.println(message1.equals(message2));
-        System.out.println(message1.equals(message3));
-        System.out.println("*************\n");
-
-        System.out.println("Test equals/hashcode");
-        System.out.println("message1 hashcode: " + message1.hashCode());
-        System.out.println("message2 hashcode: " + message2.hashCode());
-        System.out.println("message1 == message 2: " + message1.equals(message2));
-        System.out.println("message1 hashcode: " + message1.hashCode());
-        System.out.println("message3 hashcode: " + message3.hashCode());
-        System.out.println("message1 == message 2: " + message1.equals(message3));
-        System.out.println("*************\n");
+    private static void makeTest(String scenario, Message message, Message... messages) {
+        MessageService service = new OrderedDistinctedMessageService(
+                new TimestampDecorator(),
+                new ConsolePrinter()
+        );
+        System.out.println(TEST_HEADER + scenario);
+        service.log(ASC, message, messages);
+        System.out.println(TEST_SEPARATOR);
     }
 }

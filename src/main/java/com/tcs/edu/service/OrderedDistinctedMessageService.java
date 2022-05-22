@@ -1,11 +1,17 @@
 package com.tcs.edu.service;
 
-import com.tcs.edu.decorator.*;
-import com.tcs.edu.printer.Printer;
+import com.tcs.edu.decorator.CountDecorator;
+import com.tcs.edu.decorator.Decorator;
+import com.tcs.edu.decorator.PageDecorator;
+import com.tcs.edu.decorator.SeverityDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.enums.OutputOrder;
+import com.tcs.edu.exception.LogException;
+import com.tcs.edu.printer.Printer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * @author a.a.krasnov
@@ -72,16 +78,27 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      */
     private Set<Message> getDistinct(Message message, Message[] messages) {
         Set<Message> messagesIncome = new LinkedHashSet<>();
-        if (!super.isArgValid(message)) {
+        try {
+            super.isArgValid(message);
             messagesIncome.add(message);
-        }
-        if (super.isArgsValid(messages)) {
+            super.isArgsValid(messages);
             for (Message msg : messages) {
                 if (!super.isArgValid(msg)) {
                     messagesIncome.add(msg);
                 }
             }
+
+        } catch (IllegalArgumentException e) {
+            throw new LogException("notValidArgMessage", e);
         }
+
+//        if (super.isArgsValid(messages)) {
+//            for (Message msg : messages) {
+//                if (!super.isArgValid(msg)) {
+//                    messagesIncome.add(msg);
+//                }
+//            }
+//        }
         return messagesIncome;
     }
 }

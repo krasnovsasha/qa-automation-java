@@ -14,8 +14,9 @@ public abstract class ValidatedService {
      * @return true if message is not null or body not empty
      */
     public boolean isArgValid(Message message) {
-        if (message == null) return true;
-        if (message.getBody() == null) return true;
+        if (message == null) throw new IllegalArgumentException("message is null");
+        if (message.getBody() == null) throw new IllegalArgumentException("message body is null");
+        if (message.getBody().equals("")) throw new IllegalArgumentException("message body is empty");
         return message.getBody().isEmpty();
     }
 
@@ -24,6 +25,7 @@ public abstract class ValidatedService {
      * @return true if array of messages is not null
      */
     public boolean isArgsValid(Message... messages) {
+        if (messages == null) throw new IllegalArgumentException("array of messages is null");
         return messages != null;
     }
 }
