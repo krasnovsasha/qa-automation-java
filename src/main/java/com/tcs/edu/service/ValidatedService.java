@@ -17,7 +17,7 @@ public abstract class ValidatedService {
         if (message == null) throw new IllegalArgumentException("message is null");
         if (message.getBody() == null) throw new IllegalArgumentException("message body is null");
         if (message.getBody().equals("")) throw new IllegalArgumentException("message body is empty");
-        return message.getBody().isEmpty();
+        return true;
     }
 
     /**
@@ -26,6 +26,6 @@ public abstract class ValidatedService {
      */
     public boolean isArgsValid(Message... messages) {
         if (messages == null) throw new IllegalArgumentException("array of messages is null");
-        return messages != null;
+        return true;
     }
 }
