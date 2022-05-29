@@ -5,10 +5,7 @@ import com.tcs.edu.enums.OutputOrder;
 import com.tcs.edu.exception.LogException;
 import com.tcs.edu.repository.MessageRepository;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author a.a.krasnov
@@ -39,6 +36,11 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
     @Override
     public Message findByPrimaryKey(UUID key) {
         return messageRepository.findByPrimaryKey(key);
+    }
+
+    @Override
+    public Collection<Message> findAll() {
+        return messageRepository.findAll();
     }
 
     /**

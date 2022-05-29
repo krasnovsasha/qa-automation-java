@@ -20,11 +20,18 @@ class Application {
         //test data
         Message message1 = new Message(MAJOR, "test message 1");
         Message message2 = new Message(MINOR, "test message 2");
+        Message message3 = new Message(MINOR, "test message 3");
+        Message message4 = new Message(MINOR, "test message 4");
+        Message message5 = new Message(MINOR, "test message 5");
 
         UUID key1 = service.log(ASC, message1);
         UUID key2 = service.log(ASC, message2);
+        service.log(ASC, message3);
+        service.log(ASC, message4);
+        service.log(ASC, message5);
 
         System.out.println(service.findByPrimaryKey(key1));
         System.out.println(service.findByPrimaryKey(key2));
+        System.out.println(service.findAll());
     }
 }
