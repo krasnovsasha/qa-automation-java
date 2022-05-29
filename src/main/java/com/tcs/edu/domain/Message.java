@@ -22,8 +22,9 @@ public class Message {
         return id;
     }
 
-    public void setId(UUID id) {
+    public UUID setId(UUID id) {
         this.id = id;
+        return id;
     }
 
     public Message(Severity level, String body) {

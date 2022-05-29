@@ -8,6 +8,7 @@ import com.tcs.edu.repository.MessageRepository;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author a.a.krasnov
@@ -25,10 +26,19 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      *
      * @param order    incoming order ASC or DESC
      * @param messages incoming messages
+     * @return
      */
-    public void log(OutputOrder order, Message message, Message... messages) {
+    public UUID log(OutputOrder order, Message message, Message... messages) {
         ArrayList<Message> messagesIncome = new ArrayList<>(getDistinct(message, messages));
-        messagesIncome.forEach(messageRepository::create);
+        for (Message m : messagesIncome) {
+            return messageRepository.create(m);
+        }
+        return null;
+    }
+
+    @Override
+    public Message findByPrimaryKey(UUID key) {
+        return messageRepository.findByPrimaryKey(key);
     }
 
     /**

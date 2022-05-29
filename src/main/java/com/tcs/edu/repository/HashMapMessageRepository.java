@@ -12,11 +12,16 @@ import java.util.UUID;
  * CRUD
  */
 public class HashMapMessageRepository implements MessageRepository {
-    private Map<UUID, Message> messages = new HashMap<>();
+    private final Map<UUID, Message> messages = new HashMap<>();
 
     @Override
     public UUID create(Message message) {
-        messages.put(UUID.randomUUID(), message);
+        messages.put(message.setId(UUID.randomUUID()), message);
         return message.getId();
+    }
+
+    @Override
+    public Message findByPrimaryKey(UUID key) {
+        return messages.get(key);
     }
 }
