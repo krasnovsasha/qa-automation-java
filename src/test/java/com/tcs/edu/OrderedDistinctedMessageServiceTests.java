@@ -2,6 +2,7 @@ package com.tcs.edu;
 
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.enums.Severity;
+import com.tcs.edu.exception.LogException;
 import com.tcs.edu.repository.HashMapMessageRepository;
 import com.tcs.edu.service.MessageService;
 import com.tcs.edu.service.OrderedDistinctedMessageService;
@@ -97,5 +98,22 @@ class OrderedDistinctedMessageServiceTests {
         //region Then
         Assertions.assertTrue(service.findBySeverity(severity).contains(message), "message " + message + " was not found by severity " + severity);
         Assertions.assertFalse(service.findBySeverity(severity).contains(anotherMessage), "message " + anotherMessage + " was found by severity " + severity);
+    }
+    @Test
+    @DisplayName("Get exception if message is null")
+    void shouldGetErrorIfMessageIsNull(){
+        Assertions.assertThrows(LogException.class,()->service.log(ASC,null));
+    }
+
+    @Test
+    @DisplayName("Get exception if message body is null")
+    void shouldGetErrorIfMessageBodyIsNull(){
+        Assertions.assertThrows(LogException.class,()->service.log(ASC,new Message(MAJOR,null)));
+    }
+
+    @Test
+    @DisplayName("Get exception if message body is empty")
+    void shouldGetErrorIfMessageBodyIsEmpty(){
+        Assertions.assertThrows(LogException.class,()->service.log(ASC,new Message(MAJOR,"")));
     }
 }
