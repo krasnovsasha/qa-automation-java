@@ -16,6 +16,7 @@ import java.util.UUID;
 import static com.tcs.edu.enums.OutputOrder.ASC;
 import static com.tcs.edu.enums.Severity.MAJOR;
 import static com.tcs.edu.enums.Severity.MINOR;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OrderedDistinctedMessageServiceTests {
     private MessageService service;
@@ -38,7 +39,7 @@ class OrderedDistinctedMessageServiceTests {
         //region When
         UUID key = service.log(ASC, message);
         //region Then
-        Assertions.assertEquals(message, service.findByPrimaryKey(key), "message " + message + " was not found by UUID " + key);
+        assertEquals(message, service.findByPrimaryKey(key), "message " + message + " was not found by UUID " + key);
     }
 
     @Test
@@ -64,9 +65,11 @@ class OrderedDistinctedMessageServiceTests {
         service.log(ASC, message);
         service.log(ASC, anotherMessage);
         //region Then
-        Assertions.assertEquals(2, service.findAll().size(), "service contains wrong count of messages");
-        Assertions.assertTrue(service.findAll().contains(message), "message " + message + " was not logged by service");
-        Assertions.assertTrue(service.findAll().contains(anotherMessage), "message " + anotherMessage + " was not logged by service");
+        Assertions.assertAll(
+                () -> assertEquals(2, service.findAll().size(), "service contains wrong count of messages"),
+                () -> assertTrue(service.findAll().contains(message), "message " + message + " was not logged by service"),
+                () -> assertTrue(service.findAll().contains(anotherMessage), "message " + anotherMessage + " was not logged by service")
+        );
     }
 
     @Test
@@ -79,9 +82,11 @@ class OrderedDistinctedMessageServiceTests {
         //region When
         service.log(ASC, message);
         //region Then
-        Assertions.assertEquals(1, service.findAll().size(), "service contains wrong count of messages");
-        Assertions.assertTrue(service.findAll().contains(message));
-        Assertions.assertFalse(service.findAll().contains(anotherMessage));
+        Assertions.assertAll(
+                () -> assertEquals(1, service.findAll().size(), "service contains wrong count of messages"),
+                () -> assertTrue(service.findAll().contains(message)),
+                () -> assertFalse(service.findAll().contains(anotherMessage))
+        );
     }
 
     @Test
@@ -96,24 +101,28 @@ class OrderedDistinctedMessageServiceTests {
         service.log(ASC, message);
         service.log(ASC, anotherMessage);
         //region Then
-        Assertions.assertTrue(service.findBySeverity(severity).contains(message), "message " + message + " was not found by severity " + severity);
-        Assertions.assertFalse(service.findBySeverity(severity).contains(anotherMessage), "message " + anotherMessage + " was found by severity " + severity);
+        Assertions.assertAll(
+                () -> assertTrue(service.findBySeverity(severity).contains(message), "message " + message + " was not found by severity " + severity),
+                () -> assertFalse(service.findBySeverity(severity).contains(anotherMessage), "message " + anotherMessage + " was found by severity " + severity)
+        );
     }
+
     @Test
     @DisplayName("Get exception if message is null")
-    void shouldGetErrorIfMessageIsNull(){
-        Assertions.assertThrows(LogException.class,()->service.log(ASC,null));
+    void shouldGetErrorIfMessageIsNull() {
+        Assertions.assertThrows(LogException.class, () -> service.log(ASC, null));
     }
 
     @Test
     @DisplayName("Get exception if message body is null")
-    void shouldGetErrorIfMessageBodyIsNull(){
-        Assertions.assertThrows(LogException.class,()->service.log(ASC,new Message(MAJOR,null)));
+    void shouldGetErrorIfMessageBodyIsNull() {
+        Assertions.assertThrows(LogException.class, () -> service.log(ASC, new Message(MAJOR, null)));
     }
 
     @Test
     @DisplayName("Get exception if message body is empty")
-    void shouldGetErrorIfMessageBodyIsEmpty(){
-        Assertions.assertThrows(LogException.class,()->service.log(ASC,new Message(MAJOR,"")));
+    void shouldGetErrorIfMessageBodyIsEmpty() {
+        Assertions.assertThrows(LogException.class, () -> service.log(ASC, new Message(MAJOR, "")));
+
     }
 }
