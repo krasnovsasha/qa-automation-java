@@ -16,6 +16,7 @@ import java.util.UUID;
 import static com.tcs.edu.enums.OutputOrder.ASC;
 import static com.tcs.edu.enums.Severity.MAJOR;
 import static com.tcs.edu.enums.Severity.MINOR;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderedDistinctedMessageServiceTests {
@@ -87,6 +88,7 @@ class OrderedDistinctedMessageServiceTests {
                 () -> assertTrue(service.findAll().contains(message)),
                 () -> assertFalse(service.findAll().contains(anotherMessage))
         );
+
     }
 
     @Test
@@ -101,10 +103,7 @@ class OrderedDistinctedMessageServiceTests {
         service.log(ASC, message);
         service.log(ASC, anotherMessage);
         //region Then
-        Assertions.assertAll(
-                () -> assertTrue(service.findBySeverity(severity).contains(message), "message " + message + " was not found by severity " + severity),
-                () -> assertFalse(service.findBySeverity(severity).contains(anotherMessage), "message " + anotherMessage + " was found by severity " + severity)
-        );
+        assertThat(service.findBySeverity(severity)).contains(message).doesNotContain(anotherMessage);
     }
 
     @Test
