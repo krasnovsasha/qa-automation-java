@@ -2,6 +2,7 @@ package com.tcs.edu.service;
 
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.enums.OutputOrder;
+import com.tcs.edu.enums.Severity;
 import com.tcs.edu.exception.LogException;
 import com.tcs.edu.repository.MessageRepository;
 
@@ -41,6 +42,11 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
     @Override
     public Collection<Message> findAll() {
         return messageRepository.findAll();
+    }
+
+    @Override
+    public Collection<Message> findBySeverity(Severity by) {
+        return messageRepository.findBySeverity(by);
     }
 
     /**

@@ -32,6 +32,7 @@ class Application {
 
         System.out.println(service.findByPrimaryKey(key1));
         System.out.println(service.findByPrimaryKey(key2));
-        System.out.println(service.findAll());
+        service.findAll().forEach(System.out::println);
+        service.findBySeverity(MINOR).forEach(System.out::println);
     }
 }
