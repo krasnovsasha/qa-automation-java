@@ -46,7 +46,11 @@ public class Message {
 
     @Override
     public String toString() {
-        return level + " " + body;
+        return "Message{" +
+                "level=" + level +
+                ", body='" + body + '\'' +
+                ", id=" + id +
+                '}';
     }
 
     /**
