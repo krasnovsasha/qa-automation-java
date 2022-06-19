@@ -3,6 +3,7 @@ package com.tcs.edu.domain;
 import com.tcs.edu.enums.Severity;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author a.a.krasnov
@@ -15,6 +16,16 @@ public class Message {
      */
     private final Severity level;
     private final String body;
+    private UUID id;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public UUID setId(UUID id) {
+        this.id = id;
+        return id;
+    }
 
     public Message(Severity level, String body) {
         this.level = level;
@@ -35,7 +46,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return level + " " + body;
+        return "\nUUID : " + id + "\nLevel : " + level + "\nBody  : " + body;
     }
 
     /**

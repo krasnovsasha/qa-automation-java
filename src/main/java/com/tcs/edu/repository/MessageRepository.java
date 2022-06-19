@@ -1,14 +1,16 @@
-package com.tcs.edu.service;
+package com.tcs.edu.repository;
 
 import com.tcs.edu.domain.Message;
-import com.tcs.edu.enums.OutputOrder;
 import com.tcs.edu.enums.Severity;
 
 import java.util.Collection;
 import java.util.UUID;
 
-public interface MessageService {
-    UUID log(OutputOrder order, Message message, Message... messages);
+/**
+ * @author a.a.krasnov
+ */
+public interface MessageRepository {
+    UUID create(Message message);
 
     Message findByPrimaryKey(UUID key);
 

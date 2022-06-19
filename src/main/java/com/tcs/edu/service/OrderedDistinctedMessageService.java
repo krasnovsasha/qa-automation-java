@@ -1,31 +1,21 @@
 package com.tcs.edu.service;
 
-import com.tcs.edu.decorator.CountDecorator;
-import com.tcs.edu.decorator.Decorator;
-import com.tcs.edu.decorator.PageDecorator;
-import com.tcs.edu.decorator.SeverityDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.enums.OutputOrder;
+import com.tcs.edu.enums.Severity;
 import com.tcs.edu.exception.LogException;
-import com.tcs.edu.printer.Printer;
+import com.tcs.edu.repository.MessageRepository;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author a.a.krasnov
  */
 public class OrderedDistinctedMessageService extends ValidatedService implements MessageService {
-    private final Printer printer;
-    private final Decorator decorator;
-    private final Decorator severityDecorator = new SeverityDecorator();
-    private final Decorator countDecorator = new CountDecorator();
-    private final Decorator pageDecorator = new PageDecorator();
+    private final MessageRepository messageRepository;
 
-    public OrderedDistinctedMessageService(Decorator decorator, Printer printer) {
-        this.decorator = decorator;
-        this.printer = printer;
+    public OrderedDistinctedMessageService(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
     }
 
     /**
@@ -34,39 +24,29 @@ public class OrderedDistinctedMessageService extends ValidatedService implements
      *
      * @param order    incoming order ASC or DESC
      * @param messages incoming messages
+     * @return
      */
-    public void log(OutputOrder order, Message message, Message... messages) {
+    public UUID log(OutputOrder order, Message message, Message... messages) {
         ArrayList<Message> messagesIncome = new ArrayList<>(getDistinct(message, messages));
-        printDescOrAscMsg(order, messagesIncome);
-    }
-
-    /**
-     * @param order          incoming order ASC or DESC
-     * @param messagesIncome incoming messages
-     *                       <p>
-     *                       method printDescOrAscMsg help to print info about order number of message in direct or reverse sort
-     */
-    private void printDescOrAscMsg(OutputOrder order, ArrayList<Message> messagesIncome) {
-        if (order.equals(OutputOrder.DESC)) {
-            for (int i = messagesIncome.size() - 1; i >= 0; i--) {
-                printer.print(
-                        getDecoratedMessage(messagesIncome, i)
-                );
-            }
-        } else if (order.equals(OutputOrder.ASC)) {
-            for (int i = 0; i <= messagesIncome.size() - 1; i++) {
-                printer.print(
-                        getDecoratedMessage(messagesIncome, i)
-                );
-            }
+        for (Message m : messagesIncome) {
+            return messageRepository.create(m);
         }
+        return null;
     }
 
-    private String getDecoratedMessage(ArrayList<Message> messagesIncome, int i) {
-        return countDecorator.decorate(messagesIncome.get(i)) +
-                decorator.decorate(messagesIncome.get(i)) +
-                severityDecorator.decorate(messagesIncome.get(i)) +
-                pageDecorator.decorate(messagesIncome.get(i));
+    @Override
+    public Message findByPrimaryKey(UUID key) {
+        return messageRepository.findByPrimaryKey(key);
+    }
+
+    @Override
+    public Collection<Message> findAll() {
+        return messageRepository.findAll();
+    }
+
+    @Override
+    public Collection<Message> findBySeverity(Severity by) {
+        return messageRepository.findBySeverity(by);
     }
 
     /**
