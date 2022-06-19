@@ -6,7 +6,6 @@ import com.tcs.edu.exception.LogException;
 import com.tcs.edu.repository.HashMapMessageRepository;
 import com.tcs.edu.service.MessageService;
 import com.tcs.edu.service.OrderedDistinctedMessageService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,13 +15,13 @@ import java.util.UUID;
 import static com.tcs.edu.enums.OutputOrder.ASC;
 import static com.tcs.edu.enums.Severity.MAJOR;
 import static com.tcs.edu.enums.Severity.MINOR;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderedDistinctedMessageServiceTests {
     private MessageService service;
-    private String messageBody = "test message";
-    private String anotherMessageBody = "another test message";
+    private final String messageBody = "test message";
+    private final String anotherMessageBody = "another test message";
 
     @BeforeEach
     public void setUp() {
@@ -52,7 +51,7 @@ class OrderedDistinctedMessageServiceTests {
         //region When
         UUID anotherKey = service.log(ASC, new Message(MAJOR, anotherMessageBody));
         //region Then
-        Assertions.assertNotEquals(message, service.findByPrimaryKey(anotherKey), "message was found using UUID from another message");
+        assertNotEquals(message, service.findByPrimaryKey(anotherKey), "message was found using UUID from another message");
     }
 
     @Test
@@ -66,7 +65,7 @@ class OrderedDistinctedMessageServiceTests {
         service.log(ASC, message);
         service.log(ASC, anotherMessage);
         //region Then
-        Assertions.assertAll(
+        assertAll(
                 () -> assertEquals(2, service.findAll().size(), "service contains wrong count of messages"),
                 () -> assertTrue(service.findAll().contains(message), "message " + message + " was not logged by service"),
                 () -> assertTrue(service.findAll().contains(anotherMessage), "message " + anotherMessage + " was not logged by service")
@@ -83,7 +82,7 @@ class OrderedDistinctedMessageServiceTests {
         //region When
         service.log(ASC, message);
         //region Then
-        Assertions.assertAll(
+        assertAll(
                 () -> assertEquals(1, service.findAll().size(), "service contains wrong count of messages"),
                 () -> assertTrue(service.findAll().contains(message)),
                 () -> assertFalse(service.findAll().contains(anotherMessage))
@@ -109,19 +108,19 @@ class OrderedDistinctedMessageServiceTests {
     @Test
     @DisplayName("Get exception if message is null")
     void shouldGetErrorIfMessageIsNull() {
-        Assertions.assertThrows(LogException.class, () -> service.log(ASC, null));
+        assertThrows(LogException.class, () -> service.log(ASC, null));
     }
 
     @Test
     @DisplayName("Get exception if message body is null")
     void shouldGetErrorIfMessageBodyIsNull() {
-        Assertions.assertThrows(LogException.class, () -> service.log(ASC, new Message(MAJOR, null)));
+        assertThrows(LogException.class, () -> service.log(ASC, new Message(MAJOR, null)));
     }
 
     @Test
     @DisplayName("Get exception if message body is empty")
     void shouldGetErrorIfMessageBodyIsEmpty() {
-        Assertions.assertThrows(LogException.class, () -> service.log(ASC, new Message(MAJOR, "")));
+        assertThrows(LogException.class, () -> service.log(ASC, new Message(MAJOR, "")));
 
     }
 }
