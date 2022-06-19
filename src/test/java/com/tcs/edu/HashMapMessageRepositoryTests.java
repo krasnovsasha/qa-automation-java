@@ -2,13 +2,14 @@ package com.tcs.edu;
 
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.repository.HashMapMessageRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static com.tcs.edu.enums.Severity.MAJOR;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HashMapMessageRepositoryTests {
     private HashMapMessageRepository hashMapMessageRepository;
@@ -22,12 +23,12 @@ class HashMapMessageRepositoryTests {
 
     @Test
     void shouldCreateUniqueUUID() {
-        Assertions.assertNotEquals(hashMapMessageRepository.create(message), hashMapMessageRepository.create(message), "UUID not unique");
+        assertNotEquals(hashMapMessageRepository.create(message), hashMapMessageRepository.create(message), "UUID not unique");
     }
 
     @Test
     void shouldFindByPrimaryKey() {
         UUID key = hashMapMessageRepository.create(message);
-        Assertions.assertEquals(message, hashMapMessageRepository.findByPrimaryKey(key), "messages not equals");
+        assertEquals(message, hashMapMessageRepository.findByPrimaryKey(key), "messages not equals");
     }
 }
