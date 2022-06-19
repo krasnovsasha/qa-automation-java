@@ -436,10 +436,8 @@ Docker for QA <sup>1</sup>
 - backend
 - API
 - client
-- [ ] Configurations used
-- [ ] Overview of [demo application](https://github.com/eugene-krivosheyev/agile-practices-application)
-- [ ] [How to build](https://github.com/eugene-krivosheyev/agile-practices-application/blob/master/README.md)
-- [ ] [Built release](https://github.com/eugene-krivosheyev/agile-practices-application/releases)
+- [ ] Authentication
+- [ ] Overview of [demo application](app.codegen/README.md)
 
 ### Docker overview <sup>0.2</sup>
 - [ ] Docker: why?
@@ -450,20 +448,17 @@ Docker for QA <sup>1</sup>
 
 ### Docker Image <sup>0.2</sup>
 - [ ] Images naming and tags
+- [ ] `build`
 - [ ] `ls`
-- [ ] `pull`
-- [ ] `rm`, `prune`
+- [ ] `pull`/`push`
+- [ ] `rm`
 
 ### Docker container <sup>0.2</sup>
 - [ ] Containers naming
+- [ ] port mappings
 - [ ] `ls`
-- [ ] `create`
-- [ ] `start`
-- [ ] `stop`
-- [ ] ports
-- [ ] mounts
+- [ ] `run`
 - [ ] `log`
-- [ ] `exec`
 
 ### Configuration externalization <sup>0.1</sup>
 - [ ] Externalization: why?
@@ -471,43 +466,78 @@ Docker for QA <sup>1</sup>
 
 ### Orchestration <sup>0.1</sup>
 - [ ] Orchestration: why?
+- [ ] Primitive orchestration with docker-compose
+```shell
+cd app.codegen
+
+docker-compose up --detach
+
+docker-compose ls
+docker-compose ps
+docker-compose logs
+
+docker-compose down
+```
 
 ---
 
 Java REST API Testing <sup>1</sup>
 ---------------------
-
 ### REST API description <sup>0.2</sup>
-- [ ] OpenAPI
-- [ ] Swagger
+- [ ] [Swagger](https://swagger.io)
+- [ ] [OpenAPI](https://ru.wikipedia.org/wiki/OpenAPI_(спецификация))
+
+### REST intro
+- [ ] REST request and response
+- Method
+- Params
+- Headers
+- Body
+- Status / Error code
+- [ ] HTTP methods
+- for CRUD
+- [x] [POST vs PUT](https://stackoverflow.com/questions/630453/what-is-the-difference-between-post-and-put-in-http)
 
 ### REST Assured <sup>0.4</sup>
 - [ ] [Overview](https://rest-assured.io)
 - [ ] [Best Practices](https://habr.com/ru/post/421005/)
 
 ### Retrofit <sup>0.4</sup>
-- [ ] [Overview](https://square.github.io/retrofit/)
-- [ ] [CRUD](https://guides.codepath.com/android/consuming-apis-with-retrofit)
-- [ ] [Domain objects vs JSON Schema](https://www.jsonschema2pojo.org) 
-- [ ] [Error Handling](https://futurestud.io/tutorials/retrofit-2-simple-error-handling)
+- [x] [Overview](https://square.github.io/retrofit/)
+- [x] [CRUD](https://guides.codepath.com/android/consuming-apis-with-retrofit)
+- [x] [Domain objects vs JSON Schema](https://www.jsonschema2pojo.org) 
+- [x] [Error Handling](https://futurestud.io/tutorials/retrofit-2-simple-error-handling)
+
+### TestContainers
+- [x] Manage containers directly from tests with [TestContainers](https://www.testcontainers.org)
 
 ---
 
 Testing DB applications <sup>1</sup>
 -----------------------
 
+### Running App with external DB
+- [ ] Externalizing App configuration for external DB
+- [ ] Running containerized DB
+- [ ] Running containerized App
+
 ### DBMS overview <sup>0.2</sup>
-- [ ] Application testing architecture
-- [ ] Test scopes
-- [ ] Testing stateful applications
-- [ ] Test fixture patterns
+- [x] Application testing architecture
+- [x] Test scopes
+- [x] Testing stateful applications
+- [x] Test fixture patterns
 
 ### SQL overview <sup>0.1</sup>
-- [ ] DDL vs DML
-- [ ] inserts
-- [ ] updates
-- [ ] selects
-- [ ] joins
+- [x] DDL vs DML
+- [x] inserts
+- [x] updates
+- [x] selects
+- [x] joins
+
+### DB overview with IDEA
+- [ ] DB client at IDEA
+- [ ] Connecting
+- [ ] Overview
 
 ### JDBC intro <sup>0.7</sup>
 - [ ] Driver
@@ -522,21 +552,20 @@ Building CI/CD pipeline with GitLab <sup>1</sup>
 -----------------------------------
 
 ### CI/CD overview <sup>0.4</sup>
-- [ ] Why CI/CD?
-- [ ] Pipeline overview
-- [ ] IaaC
+- [ ] [CI/CD pipeline overview](https://paper.dropbox.com/doc/Delivery-Pipeline-ci-cd-devops--BjFQrnzacCxT_5vhahCW~cFCAg-OBLCVRSkMek24U7IXIHbq)
+- [ ] [GitLab concepts](https://docs.gitlab.com/ee/ci/)
+- [ ] [Pipeline overview](https://docs.gitlab.com/ee/ci/pipelines/)
+
+### GitLab CI pipeline developing overview <sup>0.2</sup>
+- [ ] [Demo for `gitlab-ci.yml`](https://gitlab.com/demo-group67/demo-project/-/pipelines)
+- [ ] Creating project and pipeline
+- [ ] Pipeline definition overview
+- [ ] Triggers
 
 ### GitLab CI pipeline running and monitoring <sup>0.4</sup>
-- [ ] Creating project and pipeline
-- [ ] Triggers
-- [ ] Pipeline definition overview
 - [ ] Running pipeline
 - [ ] Run status
 - [ ] Logs and troubleshooting
-
-### GitLab CI pipeline developing overview <sup>0.2</sup>
-- [ ] Pipeline types
-- [ ] Demo for `gitlab-ci.yml`
 
 ---
 
